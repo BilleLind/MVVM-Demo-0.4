@@ -15,39 +15,43 @@ import java.util.Observer;
 
 public class AndroidView extends AppCompatActivity {
 
-    private Model model = new Model();
+    private TextView outputView;
+    private EditText inputText;
+
+    private LowerCasePresenter lowerCasePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        observeModel(model);
+        observePresenter();
 
-        TextView outputView = (TextView) findViewById(R.id.outputView);
-        outputView.setText(model.getData());
+        outputView = findViewById(R.id.outputView);
+        outputView.setText(lowerCasePresenter.getPresentableData());
 
-        EditText inputText = (EditText) findViewById(R.id.inputText);
-        inputText.setText(model.getData());
+        inputText = findViewById(R.id.inputText);
+        inputText.setText(lowerCasePresenter.getPresentableData());
     }
 
-    private void observeModel(Model model) {
-        model.addObserver(new Observer() {
+    private void observePresenter() {
+        lowerCasePresenter.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 if (o instanceof Model) {
                     String data = ((Model) o).getData();
-                    TextView outputView = (TextView) findViewById(R.id.outputView);
+                    outputView =findViewById(R.id.outputView);
                     outputView.setText(data);
-                }            }
+                }
+            }
         });
     }
 
     public void enterInput(View view) {
-        EditText inputText = (EditText) findViewById(R.id.inputText);
+        inputText =findViewById(R.id.inputText);
 
         String input = inputText.getText().toString();
-        model.setData(input);
+        lowerCasePresenter.setData(input);
     }
 
 }
