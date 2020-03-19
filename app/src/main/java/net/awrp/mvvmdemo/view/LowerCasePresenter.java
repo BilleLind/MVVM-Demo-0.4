@@ -7,17 +7,16 @@ import java.util.Observer;
 
 public class LowerCasePresenter extends Observable {
 
-    private Model model;
+    private Model model = new Model();
     private String presentableData;
 
-    public LowerCasePresenter(Model existingModel) {
-        model = existingModel;
+    public LowerCasePresenter() {
         observeModel(model);
         presentableData = getTransformedData(model.getData());
     }
 
     private void observeModel(Model model) {
-        model.addObserver(new Observer() {
+        model.addObserver(new Observer() { // remove?
             @Override
             public void update(Observable o, Object arg) {
                 if (o instanceof Model) {

@@ -18,24 +18,24 @@ public class AndroidView extends AppCompatActivity {
     private TextView outputView;
     private EditText inputText;
 
-    private LowerCasePresenter lowerCasePresenter;
+    private LowerCasePresenter lowerCaseViewModel = new LowerCasePresenter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        observePresenter();
+        observeViewModel();
 
         outputView = findViewById(R.id.outputView);
-        outputView.setText(lowerCasePresenter.getPresentableData());
+        outputView.setText(lowerCaseViewModel.getPresentableData());
 
         inputText = findViewById(R.id.inputText);
-        inputText.setText(lowerCasePresenter.getPresentableData());
+        inputText.setText(lowerCaseViewModel.getPresentableData());
     }
 
-    private void observePresenter() {
-        lowerCasePresenter.addObserver(new Observer() {
+    private void observeViewModel() {
+        lowerCaseViewModel.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 if (o instanceof Model) {
@@ -51,7 +51,7 @@ public class AndroidView extends AppCompatActivity {
         inputText =findViewById(R.id.inputText);
 
         String input = inputText.getText().toString();
-        lowerCasePresenter.setData(input);
+        lowerCaseViewModel.setData(input);
     }
 
 }
